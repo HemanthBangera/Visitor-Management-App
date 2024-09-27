@@ -1,1 +1,3 @@
 # Visitor-Management-System
+
+The Visitor Management System is designed to simplify the process of managing visitors in an organization. This system enables seamless visitor check-in and check-out, ensuring accurate visitor data is recorded and maintained. It features role-based access for both admin and users, where admin can view visitor’s as well as employees information, while users can register and manage their own check-ins/check-outs. The system uses a Java Swing-based GUI and MySQL for database management, ensuring a user-friendly experience and efficient data handling. Key functionalities such as login, registration, forgot password, and search capabilities were implemented for a complete and secure visitor management solution.
