@@ -1,4 +1,3 @@
-package com.itep.VisitorManagementSystem;
 
 import java.awt.Image;
 

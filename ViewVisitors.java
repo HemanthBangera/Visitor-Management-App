@@ -1,4 +1,3 @@
-package com.itep.VisitorManagementSystem;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
@@ -51,52 +50,38 @@ public class ViewVisitors extends JFrame {
     }
 
     private void searchVisitors() {
-        String searchName = searchField.getText();
-        tableModel.setRowCount(0);
-        setBackground(Color.cyan);
+    String searchName = searchField.getText().trim(); // Trim whitespace
+    tableModel.setRowCount(0); // Clear previous rows
 
-        if(searchName!="") {
-        try (Connection conn = new DatabaseHandler().connect()) {
-            String sql = "SELECT * FROM visitors WHERE name LIKE ?";
-            PreparedStatement stmt = conn.prepareStatement(sql);
+    try (Connection conn = new DatabaseHandler().connect()) {
+        String sql;
+        PreparedStatement stmt;
+
+        if (!searchName.isEmpty()) {
+            sql = "SELECT * FROM visitors WHERE name LIKE ?";
+            stmt = conn.prepareStatement(sql);
             stmt.setString(1, "%" + searchName + "%");
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                int id = rs.getInt("id");
-                String name = rs.getString("name");
-                String phone = rs.getString("phone");
-                String reason = rs.getString("reason_for_visit");
-                String checkInTime = rs.getString("check_in_time");
-                String checkOutTime = rs.getString("check_out_time");
-
-                tableModel.addRow(new Object[]{id, name, phone, reason, checkInTime, checkOutTime});
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } else {
+            sql = "SELECT * FROM visitors";
+            stmt = conn.prepareStatement(sql);
         }
-       }
-        else {
-        	try (Connection conn = new DatabaseHandler().connect()) {
-                String sql = "SELECT * FROM visitors WHERE name LIKE ?";
-                PreparedStatement stmt = conn.prepareStatement(sql);
-                //stmt.setString(1, "%" + searchName + "%");
-                ResultSet rs = stmt.executeQuery();
 
-                while (rs.next()) {
-                    int id = rs.getInt("id");
-                    String name = rs.getString("name");
-                    String phone = rs.getString("phone");
-                    String reason = rs.getString("reason_for_visit");
-                    String checkInTime = rs.getString("check_in_time");
-                    String checkOutTime = rs.getString("check_out_time");
+        ResultSet rs = stmt.executeQuery();
+        while (rs.next()) {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String phone = rs.getString("phone");
+            String reason = rs.getString("reason_for_visit");
+            String checkInTime = rs.getString("checkInTime");
+            String checkOutTime = rs.getString("checkOutTime");
 
-                    tableModel.addRow(new Object[]{id, name, phone, reason, checkInTime, checkOutTime});
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            tableModel.addRow(new Object[]{id, name, phone, reason, checkInTime, checkOutTime});
         }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Database error: " + e.getMessage());
     }
+}
+
 }
 

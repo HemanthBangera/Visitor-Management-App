@@ -1,4 +1,3 @@
-package com.itep.VisitorManagementSystem;
 
 import javax.swing.*;
 
@@ -60,7 +59,7 @@ public class CheckOutVisitorForm extends JFrame {
         String phone = phoneField.getText();
 
         try (Connection conn = new DatabaseHandler().connect()) {
-            String sql = "UPDATE visitors SET check_out_time = NOW() WHERE name = ? AND phone = ?";
+            String sql = "UPDATE visitors SET checkOutTime = NOW() WHERE name = ? AND phone = ?";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setString(2, phone);

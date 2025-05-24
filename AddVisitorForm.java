@@ -1,7 +1,4 @@
-package com.itep.VisitorManagementSystem;
-
 import javax.swing.*;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -76,7 +73,7 @@ public class AddVisitorForm extends JFrame {
         String reason = reasonField.getText();
         
         try (Connection conn = new DatabaseHandler().connect()) {
-            String sql = "INSERT INTO visitors (name, phone, reason_for_visit) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO visitors (name, phone, reason_for_visit,checkInTime) VALUES (?, ?, ?, NOW())";
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, name);
             stmt.setString(2, phone);

@@ -1,4 +1,3 @@
-package com.itep.VisitorManagementSystem;
 
 import javax.swing.*;
 
